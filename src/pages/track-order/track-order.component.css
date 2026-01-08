@@ -1,0 +1,79 @@
+.track-container {
+  padding: 16px;
+  font-family: Arial, sans-serif;
+}
+
+h2 {
+  margin-bottom: 8px;
+}
+
+.order-id {
+  font-size: 12px;
+  color: #555;
+  margin-bottom: 20px;
+}
+
+.order-id span {
+  font-weight: bold;
+}
+
+.status-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.status-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  opacity: 0.4;
+}
+
+.status-item.completed,
+.status-item.active {
+  opacity: 1;
+}
+
+.dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #ccc;
+}
+
+.status-item.completed .dot {
+  background: green;
+}
+
+.status-item.active .dot {
+  background: #ff9800;
+}
+
+.label {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.summary {
+  background: #f9f9f9;
+  padding: 12px;
+  border-radius: 8px;
+}
+
+.summary p {
+  margin: 6px 0;
+  font-size: 14px;
+}
+
+.price {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.loading {
+  text-align: center;
+  padding: 40px;
+  font-size: 14px;
+}

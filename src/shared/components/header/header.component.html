@@ -1,0 +1,25 @@
+<header class="app-header">
+  <div class="top-row">
+    <div class="brand">
+      <span class="logo">🍔</span>
+      <span class="name"><a href="/">LocalDelivery</a></span>
+    </div>
+
+    <div (click)="goCart()" class="cart">
+      🛒
+      <span *ngIf="cartCount > 0" class="badge">
+        {{ cartCount }}
+      </span>
+    </div>
+  </div>
+
+  <div class="sub-row">
+        <span class="location">
+          Delivering within <strong>10 km</strong> from Kund
+        </span>
+
+    <a class="about-link" routerLink="/about">
+      About
+    </a>
+  </div>
+</header>

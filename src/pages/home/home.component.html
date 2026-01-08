@@ -1,0 +1,85 @@
+<div class="home-container">
+  <div
+    (click)="goToTracking(activeOrder.orderId)"
+    *ngIf="activeOrder"
+    class="active-order-banner"
+  >
+    <div class="left">
+      <div class="title">Your order is {{ activeOrder.status | titlecase }}</div>
+      <div class="sub">
+        Total ₹{{ activeOrder.netPrice }}
+      </div>
+    </div>
+
+    <div class="right">
+      Track →
+    </div>
+  </div>
+
+  <!-- SEARCH BAR -->
+  <div class="search-bar">
+    <input
+      (input)="onSearch($event)"
+      placeholder="Search products..."
+      type="text"
+    />
+  </div>
+
+  <!-- CATEGORY FILTER -->
+  <div class="category-list">
+    <button
+      (click)="selectCategory(cat)"
+      *ngFor="let cat of categories"
+      [class.active]="selectedCategory === cat"
+    >
+      {{ cat | titlecase }}
+    </button>
+  </div>
+
+  <!-- LOADING -->
+  <div *ngIf="loading" class="loading">
+    Loading products...
+  </div>
+
+  <!-- PRODUCT LIST -->
+  <div *ngIf="!loading" class="product-grid">
+    <div *ngFor="let p of filteredProducts" class="product-card">
+      <img [src]="p.image" alt="product"/>
+
+      <div class="product-info">
+        <h3>{{ p.name }}</h3>
+        <p class="desc">{{ p.description }}</p>
+
+        <div class="footer">
+
+          <span class="price">₹{{ p.price }}</span>
+
+          <!-- IF NOT IN CART -->
+          <button
+            (click)="increaseQty(p)"
+            *ngIf="getCartQty(p._id) === 0">
+            Add
+          </button>
+
+          <!-- IF IN CART -->
+          <div
+            *ngIf="getCartQty(p._id) > 0"
+            class="qty-box">
+
+            <button (click)="decreaseQty(p)">−</button>
+
+            <span>{{ getCartQty(p._id) }}</span>
+
+            <button (click)="increaseQty(p)">+</button>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
+    <div *ngIf="filteredProducts.length === 0" class="empty">
+      No products found
+    </div>
+  </div>
+</div>

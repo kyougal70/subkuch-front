@@ -1,0 +1,39 @@
+<div class="checkout-container">
+
+  <h2>Checkout</h2>
+
+  <!-- ORDER SUMMARY -->
+  <div class="summary">
+    <span>Total Amount</span>
+    <strong>₹{{ netTotal }}</strong>
+  </div>
+
+  <!-- FORM -->
+  <form (ngSubmit)="submit()" [formGroup]="form">
+
+    <label>
+      Name
+      <input formControlName="customerName" placeholder="Your name" type="text"/>
+    </label>
+
+    <label>
+      Phone
+      <input formControlName="phone" placeholder="Mobile number" type="tel"/>
+    </label>
+
+    <label>
+      Address
+      <textarea
+        formControlName="address"
+        placeholder="Delivery address"
+        rows="3"
+      ></textarea>
+    </label>
+
+    <button [disabled]="loading || form.invalid" type="submit">
+      {{ loading ? 'Placing Order...' : 'Confirm Order' }}
+    </button>
+
+  </form>
+
+</div>

@@ -1,0 +1,34 @@
+<div *ngIf="order" class="track-container">
+
+  <h2>Order Tracking</h2>
+
+  <div class="order-id">
+    Order ID: <span>{{ order._id }}</span>
+  </div>
+
+  <div class="status-list">
+    <div
+      *ngFor="let step of statusSteps"
+      [class.active]="isActive(step)"
+      [class.completed]="isCompleted(step)"
+      class="status-item"
+    >
+      <div class="dot"></div>
+      <div class="label">
+        {{ step | titlecase }}
+      </div>
+    </div>
+  </div>
+
+  <div class="summary">
+    <p><strong>Name:</strong> {{ order.customerName }}</p>
+    <p><strong>Phone:</strong> {{ order.phone }}</p>
+    <p><strong>Address:</strong> {{ order.address }}</p>
+    <p class="price">Total: ₹{{ order.netPrice }}</p>
+  </div>
+
+</div>
+
+<div *ngIf="!order" class="loading">
+  Loading order status...
+</div>
