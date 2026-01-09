@@ -1,5 +1,4 @@
 <div class="checkout-container">
-
   <h2>Checkout</h2>
 
   <!-- ORDER SUMMARY -->
@@ -8,7 +7,6 @@
     <strong>₹{{ netTotal }}</strong>
   </div>
 
-  <!-- FORM -->
   <form (ngSubmit)="submit()" [formGroup]="form">
 
     <label>
@@ -18,22 +16,44 @@
 
     <label>
       Phone
-      <input formControlName="phone" placeholder="Mobile number" type="tel"/>
+      <input
+        formControlName="phone"
+        inputmode="numeric"
+        maxlength="10"
+        placeholder="Enter 10-digit mobile number"
+        type="tel"
+      />
     </label>
 
+    <div *ngIf="form.get('phone')?.touched && form.get('phone')?.invalid">
+      <small *ngIf="form.get('phone')?.errors?.['required']">
+        Phone number is required
+      </small>
+      <small *ngIf="form.get('phone')?.errors?.['pattern']">
+        Enter a valid 10-digit Indian mobile number
+      </small>
+    </div>
     <label>
-      Address
+      Address (Optional)
       <textarea
         formControlName="address"
-        placeholder="Delivery address"
+        placeholder="Delivery address or use current location"
         rows="3"
       ></textarea>
     </label>
+
+    <button
+      (click)="useCurrentLocation()"
+      style="background:#28a745"
+      type="button"
+    >
+      📍 Use Current Location
+    </button>
+
 
     <button [disabled]="loading || form.invalid" type="submit">
       {{ loading ? 'Placing Order...' : 'Confirm Order' }}
     </button>
 
   </form>
-
 </div>

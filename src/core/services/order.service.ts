@@ -20,8 +20,9 @@ export class OrderService {
 
   getActiveOrder() {
     const orders = this.getOrders();
+    console.log(orders, 'orders')
 
-    return orders.find((o: any) =>
+    return orders.filter((o: any) =>
       !['delivered', 'cancelled', 'cancelledByCustomer', 'cancelledByRestaurant']
         .includes(o.status)
     );

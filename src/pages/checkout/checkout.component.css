@@ -7,7 +7,6 @@ h2 {
   margin-bottom: 12px;
 }
 
-/* SUMMARY */
 .summary {
   display: flex;
   justify-content: space-between;
@@ -18,7 +17,6 @@ h2 {
   font-size: 16px;
 }
 
-/* FORM */
 form {
   display: flex;
   flex-direction: column;
@@ -40,7 +38,6 @@ textarea {
   border: 1px solid #ccc;
 }
 
-/* BUTTON */
 button {
   margin-top: 12px;
   padding: 12px;

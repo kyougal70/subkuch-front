@@ -1,18 +1,20 @@
 <div class="home-container">
-  <div
-    (click)="goToTracking(activeOrder.orderId)"
-    *ngIf="activeOrder"
-    class="active-order-banner"
-  >
-    <div class="left">
-      <div class="title">Your order is {{ activeOrder.status | titlecase }}</div>
-      <div class="sub">
-        Total ₹{{ activeOrder.netPrice }}
+  <div *ngFor="let cat of activeOrder">
+    <div
+      (click)="goToTracking(cat.orderId)"
+      *ngIf="cat"
+      class="active-order-banner"
+    >
+      <div class="left">
+        <div class="title">Your order is {{ cat.status | titlecase }}</div>
+        <div class="sub">
+          Total ₹{{ cat.netPrice }}
+        </div>
       </div>
-    </div>
 
-    <div class="right">
-      Track →
+      <div class="right">
+        Track →
+      </div>
     </div>
   </div>
 
@@ -82,4 +84,11 @@
       No products found
     </div>
   </div>
+  <div (click)=openCart() *ngIf="cartCount > 0" class="floating-cart">
+    🛒
+    <span class="cart-count">
+        {{ cartCount }}
+      </span>
+  </div>
+
 </div>

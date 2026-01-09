@@ -31,6 +31,8 @@ export class HomeComponent implements OnInit {
   loading = true;
   activeOrder: any;
 
+  cartCount = 0;
+
   constructor(
     private productService: ProductService,
     private cartService: CartService,
@@ -42,7 +44,24 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     this.fetchProducts();
     this.activeOrder = this.orderService.getActiveOrder();
+    console.log(this.activeOrder);
+    this.updateCount();
+
+    // simple polling – MVP acceptable
+    setInterval(() => {
+      this.updateCount();
+    }, 1000);
   }
+
+  updateCount() {
+    const items = this.cartService.getCart();
+    this.cartCount = items.reduce((sum, i) => sum + i.qty, 0);
+  }
+
+  openCart = () => {
+    this.router.navigate(['/cart']); // or open drawer
+  };
+
 
   goToTracking(orderId: string) {
     this.router.navigate(['/track-order', orderId]);

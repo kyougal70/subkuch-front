@@ -16,7 +16,7 @@ import {CreateOrderPayload} from '../../core/models/order.model';
 export class CheckoutComponent implements OnInit {
   loading = false;
   netTotal = 0;
-  form!: FormGroup; // <-- declare only
+  form!: FormGroup;
 
   constructor(
     private fb: FormBuilder,
@@ -35,12 +35,30 @@ export class CheckoutComponent implements OnInit {
 
     this.netTotal = this.cartService.netPrice();
 
-    // ✅ Initialize form here
+    // ✅ 1. Form initialize FIRST
     this.form = this.fb.group({
       customerName: ['', Validators.required],
-      phone: ['', Validators.required],
-      address: ['', Validators.required],
+      phone: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(/^[6-9][0-9]{9}$/),
+        ],
+      ],
+      address: [''],
     });
+
+    // ✅ 2. Patch localStorage data
+    const savedData = localStorage.getItem('user_details');
+    if (savedData) {
+      const {customerName, phone, address} = JSON.parse(savedData);
+
+      this.form.patchValue({
+        customerName,
+        phone: phone?.toString(), // IMPORTANT
+        address,
+      });
+    }
   }
 
   submit() {
@@ -54,15 +72,60 @@ export class CheckoutComponent implements OnInit {
       address: this.form.value.address,
     };
 
+    localStorage.setItem(
+      'user_details',
+      JSON.stringify({
+        customerName: this.form.value.customerName,
+        phone: this.form.value.phone,
+        address: this.form.value.address,
+      })
+    );
+
     this.loading = true;
 
     this.orderService.createOrder(payload).subscribe((order: any) => {
       this.orderService.saveOrder(order);
-
       this.cartService.clear();
+
       this.router.navigate(['/success'], {
-        queryParams: {orderId: order._id}
+        queryParams: {orderId: order._id},
       });
     });
   }
+
+  useCurrentLocation() {
+    if (!navigator.geolocation) {
+      alert('Geolocation is not supported by your browser');
+      return;
+    }
+
+    navigator.geolocation.getCurrentPosition(
+      async (position) => {
+        const lat = position.coords.latitude;
+        const lon = position.coords.longitude;
+
+        try {
+          const response = await fetch(
+            `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`
+          );
+          const data = await response.json();
+
+          const address =
+            data.display_name ||
+            `${lat}, ${lon}`;
+
+          // ✅ Patch address (optional field)
+          this.form.patchValue({address});
+        } catch (error) {
+          console.error('Failed to fetch address', error);
+          alert('Unable to fetch address automatically');
+        }
+      },
+      (error) => {
+        console.error(error);
+        alert('Location permission denied');
+      }
+    );
+  }
+
 }
