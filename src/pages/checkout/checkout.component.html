@@ -50,15 +50,17 @@
       ></textarea>
     </label>
 
-    <div id="map"></div>
+    <div class="map-wrapper">
+      <div id="map"></div>
+    </div>
 
-    <small style="color:#666">
-      Click on map to select delivery location
+    <small style="color:#666; margin-top:6px;">
+      Tap on map to select delivery location
     </small>
 
     <button
       (click)="useCurrentLocation()"
-      style="background:#28a745"
+      class="location-btn"
       type="button"
     >
       📍 Use Current Location

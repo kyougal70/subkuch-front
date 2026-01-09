@@ -18,6 +18,8 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
   loading = false;
   netTotal = 0;
   form!: FormGroup;
+  lat: number = 28.145;
+  lng: number = 76.399;
 
   map!: L.Map;
   marker!: L.Marker;
@@ -39,27 +41,18 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
 
     this.netTotal = this.cartService.netPrice();
 
-    // ✅ 1. Form initialize FIRST
     this.form = this.fb.group({
       customerName: ['', Validators.required],
-      phone: [
-        '',
-        [
-          Validators.required,
-          Validators.pattern(/^[6-9][0-9]{9}$/),
-        ],
-      ],
-      address: [''],
+      phone: ['', [Validators.required, Validators.pattern(/^[6-9][0-9]{9}$/)]],
+      address: [''], // OPTIONAL
     });
 
-    // ✅ 2. Patch localStorage data
     const savedData = localStorage.getItem('user_details');
     if (savedData) {
       const {customerName, phone, address} = JSON.parse(savedData);
-
       this.form.patchValue({
         customerName,
-        phone: phone?.toString(), // IMPORTANT
+        phone: phone?.toString(),
         address,
       });
     }
@@ -67,13 +60,24 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     this.initMap();
+
+    // 🔥 Mobile tile fix
+    setTimeout(() => this.map.invalidateSize(), 300);
+    setTimeout(() => this.map.invalidateSize(), 800);
+    setTimeout(() => this.map.invalidateSize(), 1500);
   }
 
-  initMap() {
-    this.map = L.map('map').setView([28.199, 76.618], 13); // Rewari default
+  initMap(lat = 28.145, lng = 76.399) {
+    this.lat = lat;
+    this.lng = lng;
+    console.log(lat, lng)
+    this.map = L.map('map', {
+      zoomControl: true,
+      attributionControl: false,
+    }).setView([lat, lng], 16);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '© OpenStreetMap',
+      maxZoom: 19,
     }).addTo(this.map);
 
     this.map.on('click', (e: any) => {
@@ -87,18 +91,43 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
     } else {
       this.marker = L.marker([lat, lng]).addTo(this.map);
     }
+    this.lat = lat;
+    this.lng = lng;
+    console.log(lat, lng)
+    this.map.setView([lat, lng], 18);
 
-    // Reverse geocoding
     const res = await fetch(
       `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`
     );
     const data = await res.json();
 
     this.form.patchValue({
-      address: data.display_name || `${lat}, ${lng}`
+      address: data.display_name || `${lat}, ${lng}`,
     });
   }
 
+  useCurrentLocation() {
+    if (!navigator.geolocation) {
+      alert('Geolocation is not supported');
+      return;
+    }
+
+    navigator.geolocation.getCurrentPosition(
+      async (pos) => {
+        const lat = pos.coords.latitude;
+        const lng = pos.coords.longitude;
+        this.lat = lat;
+        this.lng = lng;
+        console.log(lat, lng)
+
+        this.map.setView([lat, lng], 18);
+        await this.setMarker(lat, lng);
+
+        setTimeout(() => this.map.invalidateSize(), 300);
+      },
+      () => alert('Location permission denied')
+    );
+  }
 
   submit() {
     if (this.form.invalid || this.loading) return;
@@ -109,15 +138,13 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
       customerName: this.form.value.customerName,
       phone: this.form.value.phone,
       address: this.form.value.address,
+      lat: this.lat,
+      lng: this.lng
     };
 
     localStorage.setItem(
       'user_details',
-      JSON.stringify({
-        customerName: this.form.value.customerName,
-        phone: this.form.value.phone,
-        address: this.form.value.address,
-      })
+      JSON.stringify(this.form.value)
     );
 
     this.loading = true;
@@ -131,40 +158,4 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
       });
     });
   }
-
-  useCurrentLocation() {
-    if (!navigator.geolocation) {
-      alert('Geolocation is not supported by your browser');
-      return;
-    }
-
-    navigator.geolocation.getCurrentPosition(
-      async (position) => {
-        const lat = position.coords.latitude;
-        const lon = position.coords.longitude;
-
-        try {
-          const response = await fetch(
-            `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`
-          );
-          const data = await response.json();
-
-          const address =
-            data.display_name ||
-            `${lat}, ${lon}`;
-
-          // ✅ Patch address (optional field)
-          this.form.patchValue({address});
-        } catch (error) {
-          console.error('Failed to fetch address', error);
-          alert('Unable to fetch address automatically');
-        }
-      },
-      (error) => {
-        console.error(error);
-        alert('Location permission denied');
-      }
-    );
-  }
-
 }

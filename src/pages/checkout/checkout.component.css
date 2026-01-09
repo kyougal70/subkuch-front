@@ -54,9 +54,35 @@ button:disabled {
   cursor: not-allowed;
 }
 
-#map {
-  height: 250px;
+.map-wrapper {
   width: 100%;
-  border-radius: 8px;
-  margin-top: 8px;
+  height: 300px; /* FIXED HEIGHT */
+  position: relative;
 }
+
+#map {
+  height: 100%;
+  width: 100%;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+}
+
+/* Leaflet internal fix */
+.leaflet-container {
+  height: 100% !important;
+  width: 100% !important;
+  touch-action: none;
+}
+
+
+.location-btn {
+  margin-top: 12px;
+  padding: 12px;
+  font-size: 15px;
+  background: #28a745;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+

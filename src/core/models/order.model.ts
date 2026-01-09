@@ -15,4 +15,6 @@ export interface CreateOrderPayload {
   customerName: string;
   phone: string;
   address: string;
+  lat: number;
+  lng: number;
 }
