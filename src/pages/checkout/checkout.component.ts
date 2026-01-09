@@ -1,10 +1,11 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {Router, RouterModule} from '@angular/router';
 import {CartService} from '../../core/services/cart.service';
 import {OrderService} from '../../core/services/order.service';
 import {CreateOrderPayload} from '../../core/models/order.model';
+import * as L from 'leaflet';
 
 @Component({
   selector: 'app-checkout',
@@ -13,10 +14,13 @@ import {CreateOrderPayload} from '../../core/models/order.model';
   templateUrl: './checkout.component.html',
   styleUrls: ['./checkout.component.css'],
 })
-export class CheckoutComponent implements OnInit {
+export class CheckoutComponent implements OnInit, AfterViewInit {
   loading = false;
   netTotal = 0;
   form!: FormGroup;
+
+  map!: L.Map;
+  marker!: L.Marker;
 
   constructor(
     private fb: FormBuilder,
@@ -60,6 +64,41 @@ export class CheckoutComponent implements OnInit {
       });
     }
   }
+
+  ngAfterViewInit() {
+    this.initMap();
+  }
+
+  initMap() {
+    this.map = L.map('map').setView([28.199, 76.618], 13); // Rewari default
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap',
+    }).addTo(this.map);
+
+    this.map.on('click', (e: any) => {
+      this.setMarker(e.latlng.lat, e.latlng.lng);
+    });
+  }
+
+  async setMarker(lat: number, lng: number) {
+    if (this.marker) {
+      this.marker.setLatLng([lat, lng]);
+    } else {
+      this.marker = L.marker([lat, lng]).addTo(this.map);
+    }
+
+    // Reverse geocoding
+    const res = await fetch(
+      `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`
+    );
+    const data = await res.json();
+
+    this.form.patchValue({
+      address: data.display_name || `${lat}, ${lng}`
+    });
+  }
+
 
   submit() {
     if (this.form.invalid || this.loading) return;

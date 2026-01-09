@@ -53,3 +53,10 @@ button:disabled {
   background: #999;
   cursor: not-allowed;
 }
+
+#map {
+  height: 250px;
+  width: 100%;
+  border-radius: 8px;
+  margin-top: 8px;
+}

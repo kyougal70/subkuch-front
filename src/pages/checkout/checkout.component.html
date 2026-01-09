@@ -33,14 +33,28 @@
         Enter a valid 10-digit Indian mobile number
       </small>
     </div>
+    <!--    <label>-->
+    <!--      Address (Optional)-->
+    <!--      <textarea-->
+    <!--        formControlName="address"-->
+    <!--        placeholder="Delivery address or use current location"-->
+    <!--        rows="3"-->
+    <!--      ></textarea>-->
+    <!--    </label>-->
     <label>
       Address (Optional)
       <textarea
         formControlName="address"
-        placeholder="Delivery address or use current location"
+        placeholder="Select location from map or type manually"
         rows="3"
       ></textarea>
     </label>
+
+    <div id="map"></div>
+
+    <small style="color:#666">
+      Click on map to select delivery location
+    </small>
 
     <button
       (click)="useCurrentLocation()"
