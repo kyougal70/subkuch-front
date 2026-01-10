@@ -1,66 +1,123 @@
+/* ===== HEADER CONTAINER ===== */
 .app-header {
   position: sticky;
   top: 0;
-  z-index: 100;
-  background: linear-gradient(135deg, #ff5722, #ff7043);
-  color: white;
-  padding: 12px 14px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  background: linear-gradient(135deg, #ff5722, #ff784e);
+  color: #ffffff;
+  padding: 12px 16px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
 }
 
+/* ===== LINKS ===== */
 a {
   text-decoration: none;
+  color: inherit;
 }
 
+/* ===== TOP ROW ===== */
 .top-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
+/* ===== BRAND ===== */
 .brand {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
 }
 
-.logo {
-  font-size: 22px;
+.logo img {
+  width: 34px;
+  height: 34px;
+  border-radius: 6px;
+  object-fit: cover;
+  background: white;
+  padding: 2px;
 }
 
-.name {
+.name a {
   font-size: 18px;
-  font-weight: bold;
+  font-weight: 700;
+  letter-spacing: 0.3px;
 }
 
+/* ===== CART ===== */
 .cart {
   position: relative;
-  font-size: 20px;
+  font-size: 22px;
   cursor: pointer;
+  transition: transform 0.15s ease;
+}
+
+.cart:hover {
+  transform: scale(1.08);
 }
 
 .badge {
   position: absolute;
   top: -6px;
   right: -8px;
-  background: white;
+  background: #ffffff;
   color: #ff5722;
   font-size: 11px;
-  font-weight: bold;
+  font-weight: 700;
   padding: 2px 6px;
   border-radius: 12px;
+  min-width: 18px;
+  text-align: center;
 }
 
+/* ===== SUB ROW ===== */
 .sub-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 6px;
+  margin-top: 8px;
   font-size: 12px;
+  opacity: 0.95;
 }
 
-.about-link {
-  color: white;
-  text-decoration: underline;
+/* ===== LOCATION TEXT ===== */
+.location {
+  display: flex;
+  align-items: center;
+  gap: 4px;
   font-weight: 500;
+}
+
+.location strong {
+  font-weight: 700;
+}
+
+/* ===== NAV LINKS ===== */
+.sub-row a {
+  font-weight: 600;
+  margin-left: 14px;
+  opacity: 0.95;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.sub-row a:hover {
+  opacity: 1;
+  transform: translateY(-1px);
+}
+
+/* ===== MOBILE OPTIMIZATION ===== */
+@media (max-width: 480px) {
+  .name a {
+    font-size: 16px;
+  }
+
+  .sub-row {
+    font-size: 11px;
+  }
+}
+
+.header-divider {
+  border: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.25);
+  margin: 8px 0 4px;
 }

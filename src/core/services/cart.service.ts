@@ -9,6 +9,7 @@ export class CartService {
     return JSON.parse(localStorage.getItem(this.key) || '[]');
   }
 
+
   addItem(item: OrderItem) {
     const cart = this.getCart();
     const found = cart.find(i => i.productId === item.productId);

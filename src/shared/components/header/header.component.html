@@ -1,8 +1,10 @@
 <header class="app-header">
   <div class="top-row">
     <div class="brand">
-      <span class="logo">🍔</span>
-      <span class="name"><a href="/">LocalDelivery</a></span>
+      <span class="logo"><img alt="logo" height="30"
+                              ngSrc="https://res.cloudinary.com/dvcir66jw/image/upload/v1768036944/apizqpqcmlqb8ivzcwix.jpg"
+                              width="30"></span>
+      <span class="name"><a href="/">SubKuuchOnline</a></span>
     </div>
 
     <div (click)="goCart()" class="cart">
@@ -12,14 +14,17 @@
       </span>
     </div>
   </div>
+  <hr class="header-divider"/>
 
   <div class="sub-row">
         <span class="location">
-          Delivering within <strong>10 km</strong> from Kund
+          Delivering within <strong>5 km</strong> from Kund
         </span>
 
     <a class="about-link" routerLink="/about">
       About
     </a>
+    <a routerLink="/my-orders">My Orders</a>
+
   </div>
 </header>

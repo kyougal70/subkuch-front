@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {CreateOrderPayload} from '../models/order.model';
+import {CreateOrderPayload, Order} from '../models/order.model';
 import {environment} from '../../environments/environment';
 
 @Injectable({providedIn: 'root'})
@@ -18,13 +18,9 @@ export class OrderService {
     return this.http.get(`${environment.apiUrl}/orders/${id}`);
   }
 
-  getActiveOrder() {
-    const orders = this.getOrders();
-    console.log(orders, 'orders')
-
-    return orders.filter((o: any) =>
-      !['delivered', 'cancelled', 'cancelledByCustomer', 'cancelledByRestaurant']
-        .includes(o.status)
+  getMyOrders(userId: number) {
+    return this.http.get<Order[]>(
+      `${environment.apiUrl}/orders/my-orders/${userId}`
     );
   }
 
@@ -39,6 +35,7 @@ export class OrderService {
     });
 
     localStorage.setItem(this.STORAGE_KEY, JSON.stringify(orders));
+    localStorage.setItem('userId', order.userId.toString());
   }
 
   getOrders() {

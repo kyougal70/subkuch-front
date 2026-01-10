@@ -1,23 +1,4 @@
 <div class="home-container">
-  <div *ngFor="let cat of activeOrder">
-    <div
-      (click)="goToTracking(cat.orderId)"
-      *ngIf="cat"
-      class="active-order-banner"
-    >
-      <div class="left">
-        <div class="title">Your order is {{ cat.status | titlecase }}</div>
-        <div class="sub">
-          Total ₹{{ cat.netPrice }}
-        </div>
-      </div>
-
-      <div class="right">
-        Track →
-      </div>
-    </div>
-  </div>
-
   <!-- SEARCH BAR -->
   <div class="search-bar">
     <input

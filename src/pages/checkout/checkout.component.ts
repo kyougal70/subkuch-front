@@ -130,6 +130,7 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
   }
 
   submit() {
+    const getUserId = localStorage.getItem('userId');
     if (this.form.invalid || this.loading) return;
 
     const payload: CreateOrderPayload = {
@@ -139,7 +140,8 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
       phone: this.form.value.phone,
       address: this.form.value.address,
       lat: this.lat,
-      lng: this.lng
+      lng: this.lng,
+      userId: getUserId ? +getUserId : undefined
     };
 
     localStorage.setItem(

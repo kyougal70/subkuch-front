@@ -32,7 +32,7 @@ export class SuccessComponent implements OnInit, OnDestroy {
 
   goToTracking() {
     clearInterval(this.timer);
-    this.router.navigate(['/track-order', this.orderId]);
+    this.router.navigate(['/my-orders']);
   }
 
   ngOnDestroy(): void {

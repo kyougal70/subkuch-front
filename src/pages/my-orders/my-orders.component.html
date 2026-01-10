@@ -1,0 +1,31 @@
+<div class="orders-page">
+  <h2>My Orders</h2>
+
+  <div *ngIf="loading">Loading orders...</div>
+
+  <div *ngIf="!loading && orders.length === 0">
+    No orders found
+  </div>
+
+  <div *ngFor="let order of orders" class="order-card">
+    <div class="order-header">
+      <span>Order ID: {{ order._id }}</span>
+      <span [ngClass]="statusClass(order.status)" class="status">
+        {{ order.status }}
+      </span>
+    </div>
+
+    <div *ngFor="let item of order.items" class="item">
+      <img [src]="item.productImage"/>
+      <div>
+        <b>{{ item.productName }}</b>
+        <p>Qty: {{ item.qty }} × ₹{{ item.price }}</p>
+      </div>
+    </div>
+
+    <div class="order-footer">
+      <b>Total: ₹{{ order.netPrice }}</b>
+      <small>{{ order.createdAt | date:'medium' }}</small>
+    </div>
+  </div>
+</div>

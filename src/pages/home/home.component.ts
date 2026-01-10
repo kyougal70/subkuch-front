@@ -3,7 +3,6 @@ import {CommonModule} from '@angular/common';
 import {ProductService} from '../../core/services/product.service';
 import {CartService} from '../../core/services/cart.service';
 import {Product} from '../../core/models/product.model';
-import {OrderService} from '../../core/services/order.service';
 import {Router} from '@angular/router';
 
 @Component({
@@ -29,22 +28,18 @@ export class HomeComponent implements OnInit {
   selectedCategory = 'all';
   searchText = '';
   loading = true;
-  activeOrder: any;
 
   cartCount = 0;
 
   constructor(
     private productService: ProductService,
     private cartService: CartService,
-    private orderService: OrderService,
     private router: Router,
   ) {
   }
 
   ngOnInit() {
     this.fetchProducts();
-    this.activeOrder = this.orderService.getActiveOrder();
-    console.log(this.activeOrder);
     this.updateCount();
 
     // simple polling – MVP acceptable
@@ -61,11 +56,6 @@ export class HomeComponent implements OnInit {
   openCart = () => {
     this.router.navigate(['/cart']); // or open drawer
   };
-
-
-  goToTracking(orderId: string) {
-    this.router.navigate(['/track-order', orderId]);
-  }
 
   getCartQty(productId: string): number {
     const item = this.cartService
