@@ -4,7 +4,7 @@ export interface Product {
   price: number;
   image: string;
   description: string;
-  category: string;
+  category: string[];
   isAvailable: boolean;
   status: 'active' | 'inactive';
 }

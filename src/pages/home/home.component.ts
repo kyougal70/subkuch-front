@@ -18,11 +18,43 @@ export class HomeComponent implements OnInit {
   categories: string[] = [
     'all',
     'general',
-    'dessert',
-    'drinks',
+    'other',
+    'fastFood',
+    'streetFood',
+    'meal',
+    'thali',
+    'combo',
     'snack',
+    'chaat',
+    'fries',
     'bread',
+    'bakery',
+    'cake',
+    'pastry',
+    'dessert',
+    'sweets',
+    'iceCream',
+    'drinks',
+    'coldDrink',
+    'juice',
+    'shake',
+    'tea',
+    'coffee',
+    'veg',
     'nonVeg',
+    'egg',
+    'northIndian',
+    'southIndian',
+    'chinese',
+    'italian',
+    'continental',
+    'healthy',
+    'salad',
+    'fruits',
+    'vegetables',
+    'breakfast',
+    'lunch',
+    'dinner',
   ];
 
   selectedCategory = 'all';
@@ -106,7 +138,7 @@ export class HomeComponent implements OnInit {
     this.filteredProducts = this.products.filter((p) => {
       const matchCategory =
         this.selectedCategory === 'all' ||
-        p.category === this.selectedCategory;
+        p.category.includes(this.selectedCategory);
 
       const matchSearch =
         p.name.toLowerCase().includes(this.searchText.toLowerCase()) ||
