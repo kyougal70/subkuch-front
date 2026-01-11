@@ -7,6 +7,13 @@ import {OrderService} from '../../core/services/order.service';
 import {CreateOrderPayload} from '../../core/models/order.model';
 import * as L from 'leaflet';
 
+delete (L.Icon.Default.prototype as any)._getIconUrl;
+
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl: 'https://res.cloudinary.com/dvcir66jw/image/upload/v1768065065/ye5es26rv8gsrxsili6i.png',
+  iconUrl: 'https://res.cloudinary.com/dvcir66jw/image/upload/v1768065099/njguwdglp83cad1oh6w0.png',
+});
+
 @Component({
   selector: 'app-checkout',
   standalone: true,
@@ -155,9 +162,7 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
       this.orderService.saveOrder(order);
       this.cartService.clear();
 
-      this.router.navigate(['/success'], {
-        queryParams: {orderId: order._id},
-      });
+      this.router.navigate(['/payment']);
     });
   }
 }

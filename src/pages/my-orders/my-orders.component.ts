@@ -18,7 +18,10 @@ export class MyOrdersComponent implements OnInit {
 
   ngOnInit() {
     const userId = localStorage.getItem('userId');
-    if (!userId) return;
+    if (!userId) {
+      this.loading = false;
+      return
+    }
 
     this.orderService.getMyOrders(+userId).subscribe({
       next: (res: any) => {

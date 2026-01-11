@@ -3,6 +3,7 @@ import {CommonModule} from '@angular/common';
 import {Router, RouterModule} from '@angular/router';
 import {CartService} from '../../core/services/cart.service';
 import {OrderItem} from '../../core/models/order.model';
+import {environment} from '../../environments/environment';
 
 @Component({
   selector: 'app-cart',
@@ -14,6 +15,7 @@ import {OrderItem} from '../../core/models/order.model';
 export class CartComponent implements OnInit {
   items: OrderItem[] = [];
   netTotal = 0;
+  protected readonly environment = environment;
 
   constructor(private cartService: CartService, private router: Router) {
   }

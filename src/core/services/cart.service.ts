@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {OrderItem} from '../models/order.model';
+import {environment} from '../../environments/environment';
 
 @Injectable({providedIn: 'root'})
 export class CartService {
@@ -44,6 +45,6 @@ export class CartService {
   }
 
   netPrice() {
-    return this.getCart().reduce((s, i) => s + i.totalPrice, 0);
+    return (this.getCart().reduce((s, i) => s + i.totalPrice, 0) + environment.deliveryFee);
   }
 }

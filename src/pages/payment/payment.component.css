@@ -1,0 +1,80 @@
+.payment-page {
+  padding: 16px;
+}
+
+.amount-box {
+  background: #fff3e0;
+  padding: 14px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 16px;
+}
+
+.options {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.options button {
+  flex: 1;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  background: #fff;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.options button.active {
+  background: #ff5722;
+  color: white;
+  border-color: #ff5722;
+}
+
+.cod-box,
+.online-box {
+  background: white;
+  padding: 16px;
+  border-radius: 12px;
+}
+
+label {
+  display: block;
+  margin-top: 10px;
+  font-size: 13px;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  margin-top: 4px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+.confirm-btn {
+  width: 100%;
+  margin-top: 16px;
+  padding: 12px;
+  border-radius: 10px;
+  background: #ff5722;
+  color: white;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.preview {
+  width: 100%;
+  margin-top: 10px;
+  border-radius: 8px;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}

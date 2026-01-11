@@ -30,6 +30,10 @@
   <!-- FOOTER -->
   <div *ngIf="items.length > 0" class="footer">
     <div class="net-total">
+      <span>Delivery Charge</span>
+      <strong>+ ₹{{ environment.deliveryFee }}</strong>
+    </div>
+    <div class="net-total">
       <span>Total</span>
       <strong>₹{{ netTotal }}</strong>
     </div>

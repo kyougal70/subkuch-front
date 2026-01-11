@@ -1,0 +1,69 @@
+<div class="payment-page">
+
+  <!-- Net Amount -->
+  <div class="amount-box">
+    <span>Total Payable</span>
+    <strong>₹{{ netAmount }}</strong>
+  </div>
+
+  <!-- Payment Options -->
+  <div class="options">
+    <button
+      (click)="selectMode('cod')"
+      [class.active]="paymentMode === 'cod'"
+    >
+      🚚 Pay on Delivery
+    </button>
+
+    <button
+      (click)="selectMode('online')"
+      [class.active]="paymentMode === 'online'"
+    >
+      💳 Pay Online Now
+    </button>
+  </div>
+
+  <!-- COD -->
+  <div *ngIf="paymentMode === 'cod'" class="cod-box">
+    <p>You will pay when order is delivered.</p>
+    <button (click)="confirmCOD()" class="confirm-btn">
+      Confirm Order
+    </button>
+  </div>
+
+  <!-- Online -->
+  <div *ngIf="paymentMode === 'online'" class="online-box">
+    <label>Amount Paying Now</label>
+    <input
+      (input)="validateAmount()"
+      [(ngModel)]="onlinePaidAmount"
+      [max]="netAmount"
+      [min]="1"
+      placeholder="Enter amount"
+      type="number"
+    />
+
+    <p *ngIf="amountError" class="error">
+      Amount cannot be more than ₹{{ netAmount }}
+    </p>
+
+
+    <label>Upload Payment Screenshot</label>
+    <input (change)="uploadScreenshot($event)" type="file"/>
+
+    <div *ngIf="uploading">Uploading...</div>
+
+    <img *ngIf="screenshotUrl" [src]="screenshotUrl" class="preview"/>
+
+    <button
+      (click)="submitOnlinePayment()"
+      [disabled]="amountError || !screenshotUrl"
+      class="confirm-btn"
+    >
+      Submit Payment
+    </button>
+
+
+  </div>
+
+</div>

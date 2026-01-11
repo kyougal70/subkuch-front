@@ -18,6 +18,17 @@ export class OrderService {
     return this.http.get(`${environment.apiUrl}/orders/${id}`);
   }
 
+  updateOnlinePayment(orderId: string, payload: {
+    paymentScreenShot: string;
+    onlinePaidAmount: number;
+  }) {
+    return this.http.patch(
+      `${environment.apiUrl}/orders/updateOnlinePayment/${orderId}`,
+      payload
+    );
+  }
+
+
   getMyOrders(userId: number) {
     return this.http.get<Order[]>(
       `${environment.apiUrl}/orders/my-orders/${userId}`
