@@ -1,18 +1,37 @@
+/* Page Wrapper */
 .payment-page {
+  max-width: 420px;
+  margin: 24px auto;
   padding: 16px;
+  background: #ffffff;
+  border-radius: 14px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 
+/* Amount Box */
 .amount-box {
-  background: #fff3e0;
-  padding: 14px;
-  border-radius: 10px;
+  background: linear-gradient(135deg, #2563eb, #1e40af);
+  color: #fff;
+  padding: 14px 16px;
+  border-radius: 12px;
   display: flex;
   justify-content: space-between;
-  font-size: 16px;
-  font-weight: bold;
-  margin-bottom: 16px;
+  align-items: center;
+  margin-bottom: 18px;
 }
 
+.amount-box span {
+  font-size: 13px;
+  opacity: 0.9;
+}
+
+.amount-box strong {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+/* Payment Options */
 .options {
   display: flex;
   gap: 10px;
@@ -21,60 +40,179 @@
 
 .options button {
   flex: 1;
-  padding: 12px;
+  padding: 10px 12px;
   border-radius: 10px;
-  border: 1px solid #ddd;
-  background: #fff;
+  border: 1px solid #e5e7eb;
+  background: #f9fafb;
+  font-size: 14px;
   cursor: pointer;
-  font-weight: 500;
+  transition: all 0.2s ease;
 }
 
 .options button.active {
-  background: #ff5722;
-  color: white;
-  border-color: #ff5722;
+  background: #2563eb;
+  color: #fff;
+  border-color: #2563eb;
 }
 
+.options button:hover {
+  background: #eef2ff;
+}
+
+/* COD & Online Box */
 .cod-box,
 .online-box {
-  background: white;
-  padding: 16px;
+  background: #f9fafb;
+  padding: 14px;
   border-radius: 12px;
+  margin-top: 10px;
 }
 
-label {
+/* Labels */
+.online-box label {
   display: block;
+  font-size: 13px;
+  margin-bottom: 6px;
+  color: #374151;
+}
+
+/* Inputs */
+.online-box input[type="number"],
+.online-box input[type="file"] {
+  width: 100%;
+  padding: 9px 10px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.online-box input:focus {
+  outline: none;
+  border-color: #2563eb;
+}
+
+/* Error */
+.error {
+  font-size: 12px;
+  color: #dc2626;
+  margin-bottom: 8px;
+}
+
+/* Payment QR / Image */
+.online-box img {
+  display: block;
+  margin: 10px auto;
+  border-radius: 10px;
+}
+
+/* Preview Image */
+.preview {
+  max-width: 100%;
+  border-radius: 10px;
   margin-top: 10px;
+  border: 1px solid #e5e7eb;
+}
+
+/* Buttons */
+button {
+  width: 100%;
+  padding: 11px;
+  border-radius: 10px;
+  border: none;
+  font-size: 14px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+/* Confirm Button */
+.confirm-btn {
+  background: #16a34a;
+  color: #fff;
+}
+
+.confirm-btn:disabled {
+  background: #9ca3af;
+  cursor: not-allowed;
+}
+
+/* Pay Now Button */
+.online-box button:not(.confirm-btn) {
+  background: #2563eb;
+  color: #fff;
+}
+
+/* Download Button */
+/*.download-btn {*/
+/*  display: inline-block;*/
+/*  width: 100%;*/
+/*  text-align: center;*/
+/*  padding: 9px;*/
+/*  margin-top: 8px;*/
+/*  background: #f3f4f6;*/
+/*  color: #111827;*/
+/*  border-radius: 8px;*/
+/*  text-decoration: none;*/
+/*  font-size: 13px;*/
+/*}*/
+
+.download-btn:hover {
+  background: #e5e7eb;
+}
+
+/* Uploading text */
+.online-box div {
+  font-size: 13px;
+  text-align: center;
+  color: #6b7280;
+  margin: 6px 0;
+}
+
+/* Mobile Friendly */
+@media (max-width: 480px) {
+  .payment-page {
+    margin: 12px;
+    padding: 14px;
+  }
+}
+
+/* Fix button stacking */
+.pay-now-btn,
+.confirm-btn,
+.download-btn {
+  display: block;
+  width: 100%;
+  margin-top: 10px;
+}
+
+/* Pay Now */
+.pay-now-btn {
+  background: #2563eb;
+  color: #fff;
+  border-radius: 10px;
+  padding: 11px;
+  font-size: 14px;
+  border: none;
+}
+
+/* Download Image */
+.download-btn {
+  background: #f3f4f6;
+  color: #111827;
+  text-align: center;
+  padding: 9px;
+  border-radius: 8px;
+  text-decoration: none;
   font-size: 13px;
 }
 
-input {
-  width: 100%;
-  padding: 10px;
-  margin-top: 4px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-}
-
+/* Submit */
 .confirm-btn {
-  width: 100%;
-  margin-top: 16px;
-  padding: 12px;
-  border-radius: 10px;
-  background: #ff5722;
-  color: white;
-  border: none;
-  font-size: 16px;
-  cursor: pointer;
+  background: #16a34a;
+  color: #fff;
 }
 
-.preview {
-  width: 100%;
-  margin-top: 10px;
-  border-radius: 8px;
-}
-
-button:disabled {
-  opacity: 0.6;
+.confirm-btn:disabled {
+  background: #9ca3af;
   cursor: not-allowed;
 }

@@ -47,13 +47,28 @@
       Amount cannot be more than ₹{{ netAmount }}
     </p>
 
+    <div>
+      <img [src]="environment.paymentImage" alt="payment" height="60%" width="80%">
+    </div>
+    <!--    <a-->
+    <!--      [href]="environment.paymentImage"-->
+    <!--      class="download-btn"-->
+    <!--      download-->
+    <!--    >-->
+    <!--      Download qrcode-->
+    <!--    </a>-->
 
     <label>Upload Payment Screenshot</label>
     <input (change)="uploadScreenshot($event)" type="file"/>
 
     <div *ngIf="uploading">Uploading...</div>
+    <img
+      *ngIf="screenshotUrl"
+      [src]="screenshotUrl"
+      class="preview"
+    />
+    <!--    <button (click)="payNow()" class="pay-now-btn">Pay Now</button>-->
 
-    <img *ngIf="screenshotUrl" [src]="screenshotUrl" class="preview"/>
 
     <button
       (click)="submitOnlinePayment()"

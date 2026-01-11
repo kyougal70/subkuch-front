@@ -3,6 +3,7 @@ import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
 import {Router} from '@angular/router';
 import {OrderService} from '../../core/services/order.service';
+import {environment} from '../../environments/environment';
 
 @Component({
   selector: 'app-payment',
@@ -21,6 +22,7 @@ export class PaymentComponent implements OnInit {
   uploading = false;
   screenshotUrl = '';
   amountError = false;
+  protected readonly environment = environment;
 
   constructor(
     private orderService: OrderService,
@@ -42,6 +44,17 @@ export class PaymentComponent implements OnInit {
     this.paymentMode = mode;
   }
 
+  // payNow() {
+  //   const upiId = environment.upiId;
+  //   const name = environment.upiName;
+  //   const amount = this.onlinePaidAmount;
+  //
+  //   const url =
+  //     `upi://pay?pa=${upiId}&pn=${encodeURIComponent(name)}&am=${amount}&cu=INR`;
+  //
+  //   window.location.href = url;
+  // }
+
   validateAmount() {
     if (this.onlinePaidAmount > this.netAmount) {
       this.amountError = true;
@@ -50,7 +63,6 @@ export class PaymentComponent implements OnInit {
       this.amountError = false;
     }
   }
-
 
   async uploadScreenshot(event: any) {
     const file = event.target.files[0];
